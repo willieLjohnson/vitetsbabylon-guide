@@ -21,16 +21,6 @@ export default class Game {
     });
     this.scene = createScene(this.engine, this.canvas);
     this.world = new World(this.scene);
-    this.scene.onKeyboardObservable.add((kbInfo) => {
-      switch (kbInfo.type) {
-        case KeyboardEventTypes.KEYDOWN:
-          this.world.player.onKeyDown(kbInfo.event.keyCode);
-          break;
-        case KeyboardEventTypes.KEYUP:
-          this.world.player.onKeyUp(kbInfo.event.keyCode);
-          break;
-      }
-    });
   }
 
   debug(debugOn: boolean = true) {

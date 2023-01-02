@@ -1,9 +1,19 @@
-import { Scene, Vector3 } from "babylonjs";
+import { KeyboardEventTypes, Scene, Vector3 } from "babylonjs";
 import Entity from "./entity";
 
 export default class Player extends Entity {
   constructor(public scene: Scene) {
     super("player", new Vector3(), 0.2);
+    scene.onKeyboardObservable.add((kbInfo) => {
+      switch (kbInfo.type) {
+        case KeyboardEventTypes.KEYDOWN:
+          this.onKeyDown(kbInfo.event.keyCode);
+          break;
+        case KeyboardEventTypes.KEYUP:
+          this.onKeyUp(kbInfo.event.keyCode);
+          break;
+      }
+    });
   }
 
   onKeyDown(keyCode: any) {
@@ -39,9 +49,5 @@ export default class Player extends Entity {
         this.moveDirection.x = 0;
         break;
     }
-  }
-
-  update() {
-    this.mesh.moveWithCollisions(this.moveDirection.scale(this.moveSpeed));
   }
 }
