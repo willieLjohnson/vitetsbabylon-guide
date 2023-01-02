@@ -1,7 +1,12 @@
+import { Scene } from "babylonjs";
 import Entity from "./entity";
+import Player from "./player";
 
 export default class World {
-  constructor(public entities: Entity[] = []) {}
+  player: Player;
+  constructor(scene: Scene, public entities: Entity[] = []) {
+    this.player = new Player(scene);
+  }
 
   addEntity(entity: Entity) {
     this.entities.push(entity);
@@ -12,5 +17,9 @@ export default class World {
     if (index !== -1) {
       this.entities.splice(index, 1);
     }
+  }
+  update() {
+    this.player.update();
+    this.entities.forEach((e) => e.update());
   }
 }

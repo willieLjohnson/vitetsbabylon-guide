@@ -7,14 +7,12 @@ import {
   HemisphericLight,
   KeyboardEventTypes,
 } from "babylonjs";
-import Player from "./world/player";
 import World from "./world/world";
 
 export default class Game {
   engine: Engine;
   scene: Scene;
   world: World;
-  player: Player;
 
   constructor(readonly canvas: HTMLCanvasElement) {
     this.engine = new Engine(canvas);
@@ -22,16 +20,14 @@ export default class Game {
       this.engine.resize();
     });
     this.scene = createScene(this.engine, this.canvas);
-    this.world = new World();
-    this.player = new Player(this.scene);
-    this.world.addEntity(this.player);
+    this.world = new World(this.scene);
     this.scene.onKeyboardObservable.add((kbInfo) => {
       switch (kbInfo.type) {
         case KeyboardEventTypes.KEYDOWN:
-          this.player.onKeyDown(kbInfo.event.keyCode);
+          this.world.player.onKeyDown(kbInfo.event.keyCode);
           break;
         case KeyboardEventTypes.KEYUP:
-          this.player.onKeyUp(kbInfo.event.keyCode);
+          this.world.player.onKeyUp(kbInfo.event.keyCode);
           break;
       }
     });
@@ -49,7 +45,7 @@ export default class Game {
     this.debug(true);
     this.engine.runRenderLoop(() => {
       this.scene.render();
-      this.player.update();
+      this.world.update();
     });
   }
 }

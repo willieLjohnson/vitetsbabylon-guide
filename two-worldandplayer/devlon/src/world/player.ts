@@ -1,13 +1,9 @@
-import { Scene, Vector3, MeshBuilder, Mesh } from "babylonjs";
+import { Scene, Vector3 } from "babylonjs";
 import Entity from "./entity";
 
 export default class Player extends Entity {
-  moveDirection: Vector3 = new Vector3();
-  mesh: Mesh;
-
   constructor(public scene: Scene) {
     super("player", new Vector3(), 0.2);
-    this.mesh = MeshBuilder.CreateSphere(this.id, { diameter: 2 }, scene);
   }
 
   onKeyDown(keyCode: any) {
